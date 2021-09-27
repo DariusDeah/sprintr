@@ -1,5 +1,4 @@
 import { Schema } from 'mongoose'
-import { ValueSchema } from './Value'
 
 export const BacklogItemSchema = new Schema({
   name: { type: String, required: true },
@@ -10,7 +9,7 @@ export const BacklogItemSchema = new Schema({
   sprintId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true }
 })
 
-ValueSchema.virtual('creator', {
+BacklogItemSchema.virtual('creator', {
   localField: 'creatorId',
   foreignField: '_id',
   justOne: true,
