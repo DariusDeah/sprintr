@@ -8,7 +8,7 @@ export const ProjectSchema = new Schema({
   creatorId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true }
 })
 
-ProjectSchema.virtual('creator', {
+ProjectSchema.virtual('creator name picture', {
   localField: 'creatorId',
   foreignField: '_id',
   justOne: true,
