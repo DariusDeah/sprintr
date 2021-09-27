@@ -8,6 +8,7 @@ class DbContext {
   Account = mongoose.model('Account', AccountSchema);
   Profiles = mongoose.model('Profile', ProfileSchema, 'accounts');
   BacklogItems = mongoose.model('BacklogItems', TaskSchema)
+  Tasks = mongoose.model('Task', TaskSchema)
 }
 
 export const dbContext = new DbContext()
