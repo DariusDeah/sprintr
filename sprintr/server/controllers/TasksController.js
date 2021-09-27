@@ -6,12 +6,35 @@ export class TasksController extends BaseController {
   constructor() {
     super('api/tasks')
     this.router
-      // @ts-ignore
-      .get('', getTasks())
-      .put('')
-      .delete('')
+      .get('', this.getTasks)
+      .put('', this.editTask)
+      .delete('', this.removeTask)
   }
-}
-function getTasks() {
-  tasksService.getTasks()
+
+  async getTasks(req, res, next) {
+    try {
+      const res = await tasksService.getTasks()
+      return res
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  editTask(req, res, next) {
+    try {
+      const task = tasksService.editTask(req.data.name)
+      return task
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  removeTask(req, res, next) {
+    try {
+      const task = tasksService.removeTask()
+      return task
+    } catch (error) {
+      next(error)
+    }
+  }
 }
