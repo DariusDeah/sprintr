@@ -6,7 +6,7 @@ export const BacklogItemSchema = new Schema({
   status: { enums: ['Pending', 'In Progress', 'In Reveiw', 'Done'], required: true },
   creatorId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true },
   projectId: { type: Schema.Types.ObjectId, ref: 'Project', required: true },
-  sprintId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true }
+  sprintId: { type: Schema.Types.ObjectId, ref: 'Sprint', required: true }
 })
 
 BacklogItemSchema.virtual('creator', {
@@ -14,4 +14,16 @@ BacklogItemSchema.virtual('creator', {
   foreignField: '_id',
   justOne: true,
   ref: 'Profile'
+})
+BacklogItemSchema.virtual('notes', {
+  localField: 'projectId',
+  foreignField: 'projectId',
+  justOne: false,
+  ref: 'Note'
+})
+BacklogItemSchema.virtual('tasks', {
+  localField: 'projectId',
+  foreignField: 'projectId',
+  justOne: false,
+  ref: 'Task'
 })
