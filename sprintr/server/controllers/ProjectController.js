@@ -12,6 +12,7 @@ export class ProjectController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createProject)
       .put('/:id', this.editProject)
+      .post('/:id', this.removeProject)
   }
 
   // GET REQUESTS
@@ -36,6 +37,8 @@ export class ProjectController extends BaseController {
   // --
   // POST REQUESTS
   async createProject(req, res, next) {
+    // the moment the user creates a post req we want there info to be set by auth0 req userinfo id
+    req.body.creatorId = req.userinfo.id
     try {
       const project = await projectService.createProject(req.body)
       res.send(project)
@@ -43,7 +46,18 @@ export class ProjectController extends BaseController {
       next(error)
     }
   }
-  
-  // 
-  async editProject(req,res,next)
+
+  //
+  async editProject(req, res, next) {
+    try {
+      const project = await projectService.editProject(req.body, req.params.id)
+      res.send(project)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async removeProject() {
+
+  }
 }
