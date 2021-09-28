@@ -10,13 +10,13 @@ export class SprintsController extends BaseController {
       .get('/:id', this.getSprintById)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createSprint)
-      .put('/id', this.editSprint)
-      .delete('/id', this.removeSprint)
+      .put('/:id', this.editSprint)
+      .delete('/:id', this.removeSprint)
   }
 
   async getSprints(req, res, next) {
     try {
-      const sprints = sprintService.getSprints()
+      const sprints = await sprintService.getSprints()
       res.send(sprints)
     } catch (error) {
       next(error)
@@ -25,7 +25,7 @@ export class SprintsController extends BaseController {
 
   async getSprintById(req, res, next) {
     try {
-      const sprint = sprintService.getSprintById(req.params.sprintId)
+      const sprint = await sprintService.getSprintById(req.params.sprintId)
       res.send(sprint)
     } catch (error) {
       next(error)
@@ -35,7 +35,7 @@ export class SprintsController extends BaseController {
   async createSprint(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
-      const sprint = sprintService.createSprint(req.body)
+      const sprint = await sprintService.createSprint(req.body)
       res.send(sprint)
     } catch (error) {
       next(error)
@@ -44,7 +44,7 @@ export class SprintsController extends BaseController {
 
   async editSprint(req, res, next) {
     try {
-      const editedSprint = sprintService.createSprint(req.body)
+      const editedSprint = await sprintService.createSprint(req.body)
       res.send(editedSprint)
     } catch (error) {
       next(error)
