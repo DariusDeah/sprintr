@@ -13,8 +13,8 @@ export class TasksController extends BaseController {
 
   async getTasks(req, res, next) {
     try {
-      const res = await tasksService.getTasks()
-      return res
+      const tasks = await tasksService.getTasks()
+      res.send(tasks)
     } catch (error) {
       next(error)
     }
@@ -23,7 +23,7 @@ export class TasksController extends BaseController {
   editTask(req, res, next) {
     try {
       const task = tasksService.editTask(req.data.name)
-      return task
+      res.send(task)
     } catch (error) {
       next(error)
     }
@@ -32,7 +32,7 @@ export class TasksController extends BaseController {
   removeTask(req, res, next) {
     try {
       const task = tasksService.removeTask()
-      return task
+      res.send(task)
     } catch (error) {
       next(error)
     }

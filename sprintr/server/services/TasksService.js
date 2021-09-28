@@ -3,18 +3,21 @@ import { logger } from '../utils/Logger'
 
 class TasksService {
   async getTasks() {
-    const res = dbContext.Tasks.find()
-    logger.log('res', res)
+    const tasks = dbContext.Tasks.find()
+    logger.log('res', tasks)
+    return tasks
   }
 
   async editTask(name) {
-    const res = dbContext.Tasks.find(t => t.name === name)
-    logger.log('res', res)
+    const task = dbContext.Tasks.find(t => t.name === name)
+    logger.log('res', task)
+    return task
   }
 
   async removeTask() {
-    const res = dbContext.Tasks.remove()
-    logger.log('res', res)
+    const task = dbContext.Tasks.remove()
+    logger.log('res', task)
+    return task
   }
 }
 
