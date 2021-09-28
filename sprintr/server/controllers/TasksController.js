@@ -1,4 +1,3 @@
-import { BadRequest } from '../utils/Errors'
 import { tasksService } from '../services/TasksService'
 import BaseController from '../utils/BaseController'
 
@@ -34,10 +33,10 @@ export class TasksController extends BaseController {
 
   editTask(req, res, next) {
     try {
-      if (req.body.creatorId !== req.userInfo.id) {
-        throw new BadRequest('Not Yours to Edit!')
-      }
-      const task = tasksService.editTask(req.body)
+      // if (req.body.creatorId !== req.userInfo.id) {
+      //   throw new BadRequest('Not Yours to Edit!')
+      // }
+      const task = tasksService.editTask(req.body.id, req.body)
       res.send(task)
     } catch (error) {
       next(error)
