@@ -57,7 +57,12 @@ export class ProjectController extends BaseController {
     }
   }
 
-  async removeProject() {
-
+  async removeProject(req, res, next) {
+    try {
+      const removedProject = await projectService.removeProject(req.params.id, req.userinfo.id)
+      res.send(removedProject)
+    } catch (error) {
+      next(error)
+    }
   }
 }
