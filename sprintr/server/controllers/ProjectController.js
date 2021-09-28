@@ -1,7 +1,7 @@
 import { projectService } from '../services/ProjectService'
 import BaseController from '../utils/BaseController'
-import { logger } from '../utils/Logger'
 import { Auth0Provider } from '@bcwdev/auth0provider'
+import { logger } from '../utils/Logger'
 
 export class ProjectController extends BaseController {
   constructor() {
@@ -20,6 +20,7 @@ export class ProjectController extends BaseController {
     try {
       const projects = await projectService.getProjects()
       res.send(projects)
+      logger.log('get project workingggg')
     } catch (error) {
       next(error)
     }
@@ -38,8 +39,8 @@ export class ProjectController extends BaseController {
   // POST REQUESTS
   async createProject(req, res, next) {
     // the moment the user creates a post req we want there info to be set by auth0 req userinfo id
-    req.body.creatorId = req.userinfo.id
     try {
+      req.body.creatorId = req.userinfo.id
       const project = await projectService.createProject(req.body)
       res.send(project)
     } catch (error) {
