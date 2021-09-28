@@ -3,7 +3,7 @@ import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { logger } from '../utils/Logger'
 
-export class ProjectController extends BaseController {
+export class ProjectsController extends BaseController {
   constructor() {
     super('api/projects')
     this.router
