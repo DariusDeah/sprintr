@@ -6,7 +6,8 @@ export const BacklogItemSchema = new Schema({
   status: { type: String, enums: ['Pending', 'In Progress', 'In Reveiw', 'Done'], required: true },
   creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
   projectId: { type: Schema.Types.ObjectId, ref: 'Project', required: true },
-  sprintId: { type: Schema.Types.ObjectId, ref: 'Sprint', required: true }
+  sprintId: { type: Schema.Types.ObjectId, ref: 'Sprint' },
+  color: { type: String }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
 BacklogItemSchema.virtual('creator', {
