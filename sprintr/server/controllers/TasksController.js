@@ -57,7 +57,7 @@ export class TasksController extends BaseController {
 
   async removeTask(req, res, next) {
     try {
-      const task = await tasksService.removeTask(req.params.projectId, req.userInfo.id, req.body.id)
+      const task = await tasksService.removeTask(req.params.projectId, req.userInfo.id, req.params.id)
       res.send(task)
     } catch (error) {
       next(error)

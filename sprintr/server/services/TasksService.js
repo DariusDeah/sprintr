@@ -30,11 +30,10 @@ class TasksService {
 
   async removeTask(projectId, userId, taskId) {
     const foundTask = await this.getTaskById(taskId)
-    if (userId !== foundTask.creatorId.tostring()) {
+    if (foundTask.creatorId.toString() !== userId) {
       throw new Forbidden('This is not Your Task')
     }
-    await foundTask.remove()
-    return foundTask
+    return await foundTask.remove()
   }
 }
 
