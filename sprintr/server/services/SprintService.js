@@ -2,13 +2,13 @@ import { dbContext } from '../db/DbContext'
 import { BadRequest, Forbidden } from '../utils/Errors'
 
 class SprintService {
-  async getSprints(query) {
-    const sprints = await dbContext.Sprints.find(query)
+  async getSprints(projectId) {
+    const sprints = await dbContext.Sprints.find({ projectId: projectId }).populate('creator')
     return sprints
   }
 
   async getSprintById(sprintId) {
-    const sprint = await dbContext.Sprints.findById(sprintId)
+    const sprint = await dbContext.Sprints.findById(sprintId).populate('creator')
     if (!sprint) {
       throw new BadRequest('no sprint by that name')
     }
@@ -17,6 +17,7 @@ class SprintService {
 
   async createSprint(sprintData) {
     const sprint = await dbContext.Sprints.create(sprintData)
+    await sprint.populate('creator')
     return sprint
   }
 
@@ -30,7 +31,7 @@ class SprintService {
     return sprint
   }
 
-  async removeSprint(userId, sprintId, sprintData) {
+  async removeSprint(sprintId, userId) {
     const removedsprint = await this.getSprintById(sprintId)
     if (userId !== removedsprint.creatorId.toString()) {
       throw new Forbidden()
