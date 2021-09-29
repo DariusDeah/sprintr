@@ -21,10 +21,10 @@ class ProjectService {
     return project
   }
 
-  async editProject(projectData, projectId, userId) {
+  async editProject(projectData, projectId) {
     const project = await this.getProjectsById(projectId)
     // validates userId matches creator ids
-    if (userId !== projectData.creatorId.toString()) {
+    if (project.creatorId !== projectData.creatorId.toString()) {
       throw new Forbidden()
     }
 
