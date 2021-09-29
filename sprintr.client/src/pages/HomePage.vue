@@ -10,8 +10,16 @@
 </template>
 
 <script>
+import { computed, onMounted } from '@vue/runtime-core'
+import { AppState } from '../AppState'
+import { projectService } from '../services/ProjectService'
 export default {
-  name: 'Home'
+
+  setup() {
+    onMounted(async() => {
+      await projectService.getProjects()
+    })
+  }
 }
 </script>
 

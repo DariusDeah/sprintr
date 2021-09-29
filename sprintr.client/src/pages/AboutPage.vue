@@ -5,7 +5,9 @@
 </template>
 
 <script>
+import { onMounted } from '@vue/runtime-core'
+import { projectService } from '../services/ProjectService'
 export default {
-  name: 'AboutPage'
+
 }
 </script>
