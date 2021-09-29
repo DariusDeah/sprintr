@@ -25,8 +25,8 @@ class TasksService {
     return task
   }
 
-  async removeTask() {
-    const task = dbContext.Tasks.remove()
+  async removeTask(taskId) {
+    const task = dbContext.Tasks.findByIdAndDelete(taskId)
     logger.log(' remove taskres', task)
     return task
   }

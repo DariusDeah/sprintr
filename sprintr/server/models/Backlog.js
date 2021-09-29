@@ -15,15 +15,3 @@ BacklogItemSchema.virtual('creator', {
   justOne: true,
   ref: 'Profile'
 })
-BacklogItemSchema.virtual('notes', {
-  localField: 'projectId',
-  foreignField: 'projectId',
-  justOne: false,
-  ref: 'Note'
-})
-BacklogItemSchema.virtual('tasks', {
-  localField: 'projectId',
-  foreignField: 'projectId',
-  justOne: false,
-  ref: 'Task'
-})
