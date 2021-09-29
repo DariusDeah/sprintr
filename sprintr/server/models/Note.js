@@ -7,4 +7,5 @@ export const NoteSchema = new Schema({
   taskId: { type: Schema.Types.ObjectId },
   projectId: { type: Schema.Types.ObjectId, ref: 'Projects' },
   creatorId: { types: Schema.Types.ObjectId }
-})
+}, { timestamps: true, toJSON: { virtuals: true } }
+)
