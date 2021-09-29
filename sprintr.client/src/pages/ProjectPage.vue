@@ -1,7 +1,5 @@
 <template>
-  <div class="about">
-    <h1>This is the about page</h1>
-  </div>
+  <h1>This is the Project page</h1>
 </template>
 
 <script>

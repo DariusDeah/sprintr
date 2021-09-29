@@ -9,7 +9,11 @@
       <p class="card-text">
         {{ project.description }}
       </p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <button class="btn btn-primary">
+        <router-link :to="{ name: 'Project',params:{id:project.id} }" class="btn text-success lighten-30 selectable text-uppercase">
+          Project
+        </router-link>
+      </button>
     </div>
   </div>
 </template>
