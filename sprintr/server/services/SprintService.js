@@ -23,7 +23,7 @@ class SprintService {
 
   async editSprint(userId, sprintId, sprintData) {
     const sprint = await this.getSprintById(sprintId)
-    if (userId !== sprintData.createrId.toString()) {
+    if (userId !== sprintData.creatorId.toString()) {
       throw new Forbidden()
     }
     sprint.name = sprintData.name || sprint.name

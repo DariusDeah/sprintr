@@ -23,7 +23,7 @@ class NotesService {
 
   async removeNote(noteId, userId) {
     const removedNote = await this.noteById(noteId)
-    if (userId !== removedNote.creator.id.toSring()) {
+    if (userId !== removedNote.creatorId.toSring()) {
       throw new Forbidden()
     }
     await removedNote.remove()
