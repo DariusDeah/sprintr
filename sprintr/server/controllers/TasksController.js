@@ -1,15 +1,27 @@
+import { Auth0Provider } from '@bcwdev/auth0provider'
 import { tasksService } from '../services/TasksService'
 import BaseController from '../utils/BaseController'
 
 // Quinn
 export class TasksController extends BaseController {
   constructor() {
-    super('api/projects/:id/tasks')
+    super('api/projects/:projectId/tasks')
     this.router
       .get('', this.getTasks)
+      .get('/:id', this.getTasksByProjectId)
+      .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.addTask)
       .put('/:id', this.editTask)
       .delete('/:id', this.removeTask)
+  }
+
+  async getTasksByProjectId(req, res, next) {
+    try {
+      const tasks = await tasksService.getTasks(req.params.projectId)
+      res.send(tasks)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async addTask(req, res, next) {
@@ -24,7 +36,7 @@ export class TasksController extends BaseController {
 
   async getTasks(req, res, next) {
     try {
-      const tasks = await tasksService.getTasks()
+      const tasks = await tasksService.getTasks(req.params.projectId)
       res.send(tasks)
     } catch (error) {
       next(error)
@@ -45,7 +57,7 @@ export class TasksController extends BaseController {
 
   async removeTask(req, res, next) {
     try {
-      const task = await tasksService.removeTask(req.params.id)
+      const task = await tasksService.removeTask(req.params.projectId, req.userInfo.id, req.body.id)
       res.send(task)
     } catch (error) {
       next(error)

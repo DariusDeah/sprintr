@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { AccountSchema, ProfileSchema } from '../models/Account'
+import { BacklogItemSchema } from '../models/Backlog'
 import { NoteSchema } from '../models/Note'
 import { ProjectSchema } from '../models/Project'
 import { SprintSchema } from '../models/Sprint'
@@ -12,7 +13,7 @@ class DbContext {
 
   Projects = mongoose.model('Project', ProjectSchema);
   Profiles = mongoose.model('Profile', ProfileSchema, 'accounts');
-  BacklogItems = mongoose.model('BacklogItems', TaskSchema)
+  BacklogItems = mongoose.model('BacklogItems', BacklogItemSchema)
   Tasks = mongoose.model('Task', TaskSchema)
   Sprints = mongoose.model('Sprint', SprintSchema)
 

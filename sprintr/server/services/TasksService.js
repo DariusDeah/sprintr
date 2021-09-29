@@ -1,4 +1,5 @@
 import { dbContext } from '../db/DbContext'
+import { BadRequest, Forbidden } from '../utils/Errors'
 import { logger } from '../utils/Logger'
 
 class TasksService {
@@ -9,13 +10,15 @@ class TasksService {
   }
 
   async getTaskById(taskId) {
-    const task = await dbContext.Tasks.findById(t => t.id === taskId)
+    const task = await dbContext.Tasks.findById(taskId).populate('creator').populate('backlog').populate('project')
+    if (!task) {
+      throw new BadRequest('No Tasks')
+    }
     return task
   }
 
-  async getTasks() {
-    const tasks = await dbContext.Tasks.find()
-    logger.log(' get task res', tasks)
+  async getTasks(projectId) {
+    const tasks = await dbContext.Tasks.find({ projectId })
     return tasks
   }
 
@@ -25,10 +28,13 @@ class TasksService {
     return task
   }
 
-  async removeTask(taskId) {
-    const task = dbContext.Tasks.findByIdAndDelete(taskId)
-    logger.log(' remove taskres', task)
-    return task
+  async removeTask(projectId, userId, taskId) {
+    const foundTask = await this.getTaskById(taskId)
+    if (userId !== foundTask.creatorId.tostring()) {
+      throw new Forbidden('This is not Your Task')
+    }
+    await foundTask.remove()
+    return foundTask
   }
 }
 
