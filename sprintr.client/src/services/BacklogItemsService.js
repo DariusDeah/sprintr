@@ -10,8 +10,8 @@ class BacklogItemsService {
     AppState.backlogItems = res.data.map(b => new BacklogItem(b))
   }
 
-  async createBacklog(backlogData) {
-    const res = await api.post('api/projects/:projectId/backlog', backlogData)
+  async createBacklog(projectId, backlogData) {
+    const res = await api.post(`api/projects/${projectId}/backlog`, backlogData)
     AppState.backlogItems.unshift(new BacklogItem(res.data))
   }
 }

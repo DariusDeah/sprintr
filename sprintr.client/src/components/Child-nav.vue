@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg bg-primary px-3 ">
     <div class="col-lg-6">
       <h1 class="text-light fs-1">
-        {{ project.name }}
+        {{ projects.name }}
       </h1>
     </div>
     <div class="col-lg-6">
@@ -36,11 +36,17 @@ import { AppState } from '../AppState'
 import { backlogItemsService } from '../services/BacklogItemsService'
 import { logger } from '../utils/Logger'
 export default {
-  setup() {
+  props: {
+    projectId: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
     const editable = ref({})
     return {
       editable,
-      project: computed(() => AppState.activeProject),
+      projects: computed(() => AppState.activeProject),
       toggleBacklogForm() {
         document.getElementById('BacklogForm').classList.toggle('visually-hidden')
       },
@@ -50,7 +56,7 @@ export default {
         //   name: form.name,
         //   description: form.description
         // }
-        const res = await backlogItemsService.createBacklog(editable.value)
+        const res = await backlogItemsService.createBacklog(props.projectId, editable.value)
         logger.log('created Backlog', res)
       }
     }

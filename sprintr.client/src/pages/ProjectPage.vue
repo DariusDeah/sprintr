@@ -1,5 +1,5 @@
 <template>
-  <Child-nav />
+  <Child-nav :project-id="route.params.projectId" />
   <BacklogItem v-for="b in backlogItems" :key="b.id" :backlogitem="b" />
 </template>
 
@@ -16,6 +16,7 @@ export default {
       await projectService.getProjectsById(route.params.projectId)
     })
     return {
+      route,
       backlogItems: computed(() => AppState.backlogItems)
     }
   }
