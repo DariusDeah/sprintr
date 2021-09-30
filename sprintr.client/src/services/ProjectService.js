@@ -21,9 +21,15 @@ class ProjectService {
     AppState.projects.unshift(new ProjectModel(res.data))
   }
 
+  // FIXME deletes but data persist on relaod
   async removeProject(projectId) {
-    const res = await this.getProjectsById(projectId)
-    await api.delete(res)
+    const res = await api.get(`api/projects/${projectId}`)
+    logger.log(res.data)
+    AppState.projects = AppState.projects.filter(p => p.id !== projectId)
   }
+
+  // async editProject(projectId, projectData) {
+  //   const res = await api.put(`api/projects/${projectId}`, projectData)
+  // }
 }
 export const projectService = new ProjectService()

@@ -14,9 +14,12 @@
           Project
         </router-link>
       </button>
-      <button class="btn btn-danger " @click="removeProject">
+      <button class="btn btn-danger " @click="removeProject()">
         delete
       </button>
+      <!-- <button class="btn btn-secondary " @click="editProject()">
+        edit
+      </button> -->
     </div>
   </div>
 </template>
@@ -24,6 +27,7 @@
 <script>
 import { ProjectModel } from '../Models/Project'
 import { projectService } from '../services/ProjectService'
+import Pop from '../utils/Pop'
 export default {
   props: {
     project: { type: ProjectModel, required: true }
@@ -31,7 +35,18 @@ export default {
   setup(props) {
     return {
       async removeProject() {
-        await projectService.removeProject()
+        try {
+          if (await Pop.confirm()) {
+            await projectService.removeProject(props.project.id)
+            Pop.toast('project deleted')
+          }
+        } catch (error) {
+          Pop.toast(error, 'error')
+        }
+      },
+      // TODO add edit method
+      async editProject() {
+        await projectService.editProject(props.project.id) // projectData
       }
     }
   }
