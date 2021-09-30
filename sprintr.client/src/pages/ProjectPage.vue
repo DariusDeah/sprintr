@@ -38,6 +38,7 @@ import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
 import { backlogItemsService } from '../services/BacklogItemsService'
 import Pop from '../utils/Pop'
+import { tasksService } from '../services/TasksService'
 export default {
   setup() {
     const editable = ref({})
@@ -46,6 +47,7 @@ export default {
     onMounted(async() => {
       await projectService.getProjectsById(route.params.projectId)
       await backlogItemsService.getBacklogItemsByProjectId(route.params.projectId)
+      await tasksService.getTasks(route.params.projectId)
     })
     return {
       route,

@@ -31,15 +31,25 @@ import { ref } from '@vue/reactivity'
 import Pop from '../utils/Pop'
 import { Modal } from 'bootstrap'
 import { tasksService } from '../services/TasksService'
+import { computed } from '@vue/runtime-core'
+import { AppState } from '../AppState'
 
 export default {
-  setup() {
+  props: {
+    idProp: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
     const task = ref({})
     return {
       task,
+      project: computed(() => AppState.activeProject),
       async createTask() {
         try {
-          await tasksService.createTask(task.value)
+          task.value.backlogItemId = props.idProp
+          await tasksService.createTask(task.value, this.project.id)
           Pop.toast('Task Added', 'success')
           const modal = Modal.getInstance(document.getElementById('task-form'))
           modal.hide()

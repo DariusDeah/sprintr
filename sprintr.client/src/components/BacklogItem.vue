@@ -12,7 +12,7 @@
         </button>
       </div>
       <div class="col-3">
-        <button class="btn btn-success" @click="toggleTaskForm">
+        <button class="btn btn-success" :data-bs-target="'#task-modal-' + backlogitem.id" data-bs-toggle="modal">
           Add Task
         </button>
       </div>
@@ -21,27 +21,29 @@
       </div>
       <div class="col-12">
         <div class="row">
-          <Modal id="project-modal">
+          <Modal :id="'task-modal-' + backlogitem.id">
             <template #modal-title>
               <h4>New Task</h4>
             </template>
             <template #modal-body>
-              <TaskForm />
+              <TaskForm :id-prop="backlogitem.id" />
             </template>
           </Modal>
         </div>
       </div>
     </div>
     <div class="row card-body">
-      <!-- <Task /> -->
+      <Task v-for="t in tasks" :key="t.id" :tasks="t" />
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
 import { BacklogItem } from '../Models/BacklogItem'
 import { backlogItemsService } from '../services/BacklogItemsService'
 import { logger } from '../utils/Logger'
+import { AppState } from '../AppState'
 export default {
   props: {
     backlogitem: {
@@ -55,6 +57,7 @@ export default {
   },
   setup(props) {
     return {
+      tasks: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id)),
       async deleteBacklog() {
         const res = await backlogItemsService.deleteBacklog(props.backlogitem.id, props.projectId)
         logger.log('deleted Backlog', res)
