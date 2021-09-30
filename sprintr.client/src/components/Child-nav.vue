@@ -34,7 +34,7 @@
 import { computed, ref } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { backlogItemsService } from '../services/BacklogItemsService'
-import { logger } from '../utils/Logger'
+import Pop from '../utils/Pop'
 export default {
   props: {
     projectId: {
@@ -51,13 +51,11 @@ export default {
         document.getElementById('BacklogForm').classList.toggle('visually-hidden')
       },
       async createBacklog() {
-        // const form = event.target
-        // const formdata = {
-        //   name: form.name,
-        //   description: form.description
-        // }
-        const res = await backlogItemsService.createBacklog(props.projectId, editable.value)
-        logger.log('created Backlog', res)
+        try {
+          await backlogItemsService.createBacklog(props.projectId, editable.value)
+        } catch (error) {
+          Pop.toast('error', error.message)
+        }
       }
     }
   }
