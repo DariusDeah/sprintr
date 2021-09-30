@@ -1,4 +1,8 @@
 <template>
+  <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#project-modal">
+    Launch
+  </button>
+
   <Modal id="project-modal">
     <template #modal-title>
       <h4>New Project</h4>

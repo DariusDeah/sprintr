@@ -1,5 +1,5 @@
 <template>
-  <Child-nav :project-id="route.params.projectId" />
+  <Child-nav />
 
   <div class="row justify-content-end">
     <div class="col-11">
@@ -27,6 +27,7 @@
       </button>
     </div>
   </div>
+  <router-view />
   <BacklogItem v-for="b in backlogItems" :key="b.id" :backlogitem="b" :project-id="route.params.projectId" />
 </template>
 
@@ -36,6 +37,7 @@ import { projectService } from '../services/ProjectService'
 import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
 import { backlogItemsService } from '../services/BacklogItemsService'
+import Pop from '../utils/Pop'
 export default {
   setup() {
     const editable = ref({})
@@ -47,17 +49,17 @@ export default {
     })
     return {
       route,
-      backlogItems: computed(() => AppState.backlogItems),
       editable,
+      backlogItems: computed(() => AppState.backlogItems),
       projects: computed(() => AppState.activeProject),
       toggleBacklogForm() {
         document.getElementById('BacklogForm').classList.toggle('visually-hidden')
       },
       async createBacklog() {
         try {
-          await backlogItemsService.createBacklog(props.projectId, editable.value)
+          await backlogItemsService.createBacklog(route.params.projectId, editable.value)
         } catch (error) {
-          Pop.toast('error', error.message)
+          Pop.toast(error.message, 'error')
         }
       }
     }

@@ -1,25 +1,25 @@
 <template>
-  <form @submit.prevent="createProject()">
+  <form @submit.prevent="createTask()">
     <div class="form-group">
       <input type="text"
              class="from-control"
              name="title"
-             placeholder="Project Title"
-             v-model="project.name"
+             placeholder="Task Name"
+             v-model="task.name"
              required
       >
       <div class="form-group">
-        <input type="text"
+        <input type="number"
                class="from-control"
                name="body"
-               placeholder="Description"
-               v-model="project.description"
+               placeholder="weight"
+               v-model="task.weight"
                required
         >
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-success">
-          Post
+          Add
         </button>
       </div>
     </div>
@@ -28,22 +28,21 @@
 
 <script>
 import { ref } from '@vue/reactivity'
-import { projectService } from '../services/ProjectService'
 import Pop from '../utils/Pop'
 import { Modal } from 'bootstrap'
+import { tasksService } from '../services/TasksService'
 
 export default {
   setup() {
-    const project = ref({ title: '', description: '' })
+    const task = ref({})
     return {
-      project,
-      async createProject() {
+      task,
+      async createTask() {
         try {
-          await projectService.createProject(project.value)
-          Pop.toast('Project Added', 'success')
-          const modal = Modal.getInstance(document.getElementById('project-modal'))
+          await tasksService.createTask(task.value)
+          Pop.toast('Task Added', 'success')
+          const modal = Modal.getInstance(document.getElementById('task-form'))
           modal.hide()
-          project.value = {}
         } catch (error) {
           Pop.toast(error, 'error')
         }

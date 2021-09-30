@@ -12,12 +12,24 @@
         </button>
       </div>
       <div class="col-3">
-        <button class="btn btn-success">
+        <button class="btn btn-success" @click="toggleTaskForm">
           Add Task
         </button>
       </div>
       <div class="col-1">
         <i class="mdi mdi-delete selectable text-danger" @click="deleteBacklog()"></i>
+      </div>
+      <div class="col-12">
+        <div class="row">
+          <Modal id="project-modal">
+            <template #modal-title>
+              <h4>New Task</h4>
+            </template>
+            <template #modal-body>
+              <TaskForm />
+            </template>
+          </Modal>
+        </div>
       </div>
     </div>
     <div class="row card-body">
