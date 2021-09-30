@@ -6,28 +6,13 @@
       </h1>
     </div>
     <div class="col-lg-6">
-      <button @click="toggleBacklogForm()">
-        Add Backlog
-      </button>
+      <ul>
+        <li>backlog</li>
+        <li>sprint</li>
+        <li>sprint2</li>
+      </ul>
     </div>
   </nav>
-  <div class="row visually-hidden justify-content-center" id="BacklogForm">
-    <form @submit.prevent="createBacklog()" class="col-8">
-      <div class="form-group row">
-        <label for="name">Backlog Name:</label>
-        <input type="text" name="name" v-model="editable.name">
-      </div>
-      <div class="form-group row">
-        <label for="description">Backlog Description:</label>
-        <input type="text" name="decription" v-model="editable.description">
-      </div>
-      <div class="row">
-        <button type="submit" @click="toggleBacklogForm()">
-          Submit
-        </button>
-      </div>
-    </form>
-  </div>
 </template>
 
 <script>

@@ -42,7 +42,6 @@ class ProjectService {
     if (userId !== removedProject.creatorId.toString()) {
       throw new Forbidden()
     }
-
     // remove the project and send it back to requester
     await removedProject.remove()
     return removedProject
