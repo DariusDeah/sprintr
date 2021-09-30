@@ -1,12 +1,13 @@
 <template>
   <Child-nav />
-  project page
+  <BacklogItem v-for="b in backlogItems" :key="b.id" :backlogitem="b" />
 </template>
 
 <script>
-import { onMounted } from '@vue/runtime-core'
+import { computed, onMounted } from '@vue/runtime-core'
 import { projectService } from '../services/ProjectService'
 import { useRoute } from 'vue-router'
+import { AppState } from '../AppState'
 export default {
   setup() {
   // allows us to use the id in the url
@@ -14,6 +15,9 @@ export default {
     onMounted(async() => {
       await projectService.getProjectsById(route.params.projectId)
     })
+    return {
+      backlogItems: computed(() => AppState.backlogItems)
+    }
   }
 }
 </script>

@@ -3,7 +3,7 @@ import { Schema } from 'mongoose'
 export const BacklogItemSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
-  status: { type: String, enums: ['Pending', 'In Progress', 'In Reveiw', 'Done'], required: true },
+  status: { type: String, enums: ['Pending', 'In Progress', 'In Reveiw', 'Done'], required: true, default: 'Pending' },
   creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
   projectId: { type: Schema.Types.ObjectId, ref: 'Project', required: true },
   sprintId: { type: Schema.Types.ObjectId, ref: 'Sprint' },
