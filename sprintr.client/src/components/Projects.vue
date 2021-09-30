@@ -9,25 +9,30 @@
       <p class="card-text">
         {{ project.description }}
       </p>
-      <button class="btn btn-primary">
-        <router-link :to="{ name: 'Project',params:{id:project.id} }" class="btn text-success lighten-30 selectable text-uppercase">
+      <button class="btn btn-primary ">
+        <router-link :to="{ name: 'Project',params:{projectId:project.id} }" class="btn text-light selectable text-uppercase">
           Project
         </router-link>
+      </button>
+      <button class="btn btn-danger " @click="removeProject">
+        delete
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core'
 import { ProjectModel } from '../Models/Project'
-import { AppState } from '../AppState'
+import { projectService } from '../services/ProjectService'
 export default {
   props: {
     project: { type: ProjectModel, required: true }
   },
   setup(props) {
     return {
+      async removeProject() {
+        await projectService.removeProject()
+      }
     }
   }
 }

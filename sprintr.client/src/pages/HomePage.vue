@@ -1,4 +1,12 @@
 <template>
+  <Modal id="project-modal">
+    <template #modal-title>
+      <h4>New Project</h4>
+    </template>
+    <template #modal-body>
+      <ProjectForm />
+    </template>
+  </Modal>
   <Projects v-for="p in projects" :key="p.id" :project="p" />
 </template>
 
