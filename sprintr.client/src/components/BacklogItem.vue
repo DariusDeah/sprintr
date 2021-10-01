@@ -95,7 +95,7 @@ export default {
   setup(props) {
     return {
       tasks: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id)),
-      totalComputedTaskWeight: computed(() => AppState.tasks.reduce(function(prev, cur) { return prev + cur.weight }, 0)),
+      totalComputedTaskWeight: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id).reduce(function(prev, cur) { return prev + cur.weight }, 0)),
       async deleteBacklog() {
         const res = await backlogItemsService.deleteBacklog(props.backlogitem.id, props.projectId)
         logger.log('deleted Backlog', res)
