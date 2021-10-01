@@ -27,9 +27,10 @@
       </button>
     </div>
   </div>
-
   <router-view />
-  <BacklogItem v-for="b in backlogItems" :key="b.id" :backlogitem="b" :project-id="route.params.projectId" />
+  <div class="project-backlog">
+    <BacklogItem v-for="b in backlogItems" :key="b.id" :backlogitem="b" :project-id="route.params.projectId" />
+  </div>
 </template>
 
 <script>

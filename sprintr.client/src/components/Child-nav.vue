@@ -10,9 +10,12 @@
     </div>
     <div class="col-lg-6">
       <ul>
-        <li>backlog</li>
-
-        <li>sprint2</li>
+        <router-link :to="{name:'Project.Backlog'}">
+          <button class="btn btn-info nav-link">
+            backlog
+          </button>
+        </router-link>
+        <!-- <li>sprint{{ sprint.length }}</li> -->
       </ul>
       <router-link :to="{name:'Project.Sprint'}">
         <button class="btn btn-info nav-link">
