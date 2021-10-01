@@ -13,7 +13,13 @@ class SprintsService {
   async createSprint(sprintData, projectId) {
     const res = await api.post(`api/projects/${projectId}/sprints`, sprintData)
     logger.log(res.data)
-    AppState.projects = AppState.sprints.unshift(res.data)
+    AppState.sprints = AppState.sprints.unshift(res.data)
+  }
+
+  async deleteSprint(projectId, sprintId) {
+    const res = await api.delete(`api/projects/${projectId}/sprints/${sprintId}`)
+    AppState.sprints = AppState.sprints.filter(s => s.id !== sprintId)
+    logger.log('deleted Sprint', res.data)
   }
 }
 

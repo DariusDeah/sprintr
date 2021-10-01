@@ -32,12 +32,9 @@
 import { ref } from '@vue/reactivity'
 import { sprintsService } from '../services/SprintsService'
 import Pop from '../utils/Pop'
-import { useRoute } from 'vue-router'
-import { SprintModel } from '../Models/Sprint'
 import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
 import { ProjectModel } from '../Models/Project'
-const route = useRoute()
 export default {
   props: {
     projects: { type: ProjectModel, required: true },
@@ -53,6 +50,7 @@ export default {
       projectid: computed(() => AppState.activeProject),
       async createSprint() {
         try {
+          editable.value.projectId = this.projectid.id
           await sprintsService.createSprint(editable.value)
           Pop.toast('sprint created', 'success')
         } catch (error) {
