@@ -14,9 +14,11 @@
           Project
         </router-link>
       </button>
-      <button class="btn btn-danger " @click="removeProject()">
-        delete
-      </button>
+      <div v-if="account.id === project.creatorId">
+        <button class="btn btn-danger " @click="removeProject()">
+          delete
+        </button>
+      </div>
       <!-- <button class="btn btn-secondary " @click="editProject()">
         edit
       </button> -->
@@ -25,9 +27,11 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
 import { ProjectModel } from '../Models/Project'
 import { projectService } from '../services/ProjectService'
 import Pop from '../utils/Pop'
+import { AppState } from '../AppState'
 export default {
   props: {
     project: { type: ProjectModel, required: true }
@@ -47,7 +51,8 @@ export default {
       // TODO add edit method
       async editProject() {
         await projectService.editProject(props.project.id) // projectData
-      }
+      },
+      account: computed(() => AppState.account)
     }
   }
 }

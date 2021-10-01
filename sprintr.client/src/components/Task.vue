@@ -16,7 +16,7 @@
           <i class="mdi mdi-weight text-info">{{ task.weight }}</i>
         </p>
       </div>
-      <div class="col-1 align-items-end">
+      <div class="col-1 align-items-" v-if="account.id === currentProject.creatorId">
         <i class="mdi mdi-delete text-danger selectable" @click="deleteTask(task.id, task.projectId)"></i>
       </div>
     </div>
@@ -24,8 +24,10 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
 import { tasksService } from '../services/TasksService'
 import Pop from '../utils/Pop'
+import { AppState } from '../AppState'
 export default {
   props: {
     task: {
@@ -35,6 +37,8 @@ export default {
   },
   setup(props) {
     return {
+      project: computed(() => AppState.activeProject),
+      account: computed(() => AppState.account),
       async toggleIsComplete() {
         await tasksService.toggleIsComplete(props.task.id)
       },

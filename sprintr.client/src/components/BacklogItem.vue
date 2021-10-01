@@ -22,7 +22,7 @@
           Add Task
         </button>
       </div>
-      <div class="col-1">
+      <div class="col-1" v-if="account.id === currentProject.creatorId">
         <i class="mdi mdi-delete selectable text-danger" @click="deleteBacklog()"></i>
       </div>
       <div class="col-12">
@@ -93,10 +93,13 @@ export default {
       type: String,
       required: true
     }
+
   },
   setup(props) {
     return {
       tasks: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id)),
+      account: computed(() => AppState.account),
+      currentProject: computed(() => AppState.activeProject),
       totalComputedTaskWeight: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id).reduce(function(prev, cur) { return prev + cur.weight }, 0)),
       notes: computed(() => AppState.notes.filter(n => n.backlogItemId === props.backlogitem.id)),
       async deleteBacklog() {
