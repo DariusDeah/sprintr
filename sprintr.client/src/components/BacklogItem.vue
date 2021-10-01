@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card my-1">
     <div class="row card-header">
       <div class="col-4">
         <h6>{{ backlogitem.name }}</h6>
@@ -7,7 +7,7 @@
         {{ backlogitem.status }}
       </div>
       <div class="col-4">
-        <button class="btn btn-info">
+        <button class="btn btn-info" @click="toggleBacklogDetails()">
           Show Details
         </button>
       </div>
@@ -32,8 +32,8 @@
         </div>
       </div>
     </div>
-    <div class="row card-body">
-      <Task v-for="t in tasks" :key="t.id" :tasks="t" />
+    <div class="row card-body visually-hidden" :id="'task-' + backlogitem.id">
+      <Task v-for="t in tasks" :key="t.id" :task="t" />
     </div>
   </div>
 </template>
@@ -61,6 +61,9 @@ export default {
       async deleteBacklog() {
         const res = await backlogItemsService.deleteBacklog(props.backlogitem.id, props.projectId)
         logger.log('deleted Backlog', res)
+      },
+      toggleBacklogDetails() {
+        document.getElementById(`task-${props.backlogitem.id}`).classList.toggle('visually-hidden')
       }
     }
   }

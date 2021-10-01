@@ -7,7 +7,7 @@ class TasksService {
   async createTask(taskData, projectId) {
     const res = await api.post(`api/projects/${projectId}/tasks`, taskData)
     logger.log('created Task', res)
-    AppState.tasks = AppState.tasks.unshift(new Task(res.data))
+    AppState.tasks.unshift(new Task(res.data))
   }
 
   async getTasks(projectId) {
