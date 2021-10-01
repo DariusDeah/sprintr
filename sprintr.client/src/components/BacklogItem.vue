@@ -68,6 +68,13 @@
             </option>
           </select>
         </div>
+        <div class="col-12">
+          <select name="changeSprint" :selected="backlogitem.sprintId" @change="changeBacklogItemSprint($event, backlogitem.projectId, backlogitem.id)">
+            <option v-for="s in sprints" :key="s.id" :sprint="s" :value="sprint.id">
+              {{ sprint.name }}
+            </option>
+          </select>
+        </div>
       </div>
     </template>
     <template #modal-body>
@@ -83,6 +90,7 @@ import { BacklogItem } from '../Models/BacklogItem'
 import { backlogItemsService } from '../services/BacklogItemsService'
 import { logger } from '../utils/Logger'
 import { AppState } from '../AppState'
+import { sprintsService } from '../services/SprintsService'
 export default {
   props: {
     backlogitem: {
@@ -97,11 +105,15 @@ export default {
   },
   setup(props) {
     return {
+      sprints: computed(() => AppState.sprints.filter(s => s.projectId === props.projectId)),
       tasks: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id)),
       account: computed(() => AppState.account),
       currentProject: computed(() => AppState.activeProject),
-      totalComputedTaskWeight: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id).reduce(function(prev, cur) { return prev + cur.weight }, 0)),
       notes: computed(() => AppState.notes.filter(n => n.backlogItemId === props.backlogitem.id)),
+      totalComputedTaskWeight: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id).reduce(function(prev, cur) { return prev + cur.weight }, 0)),
+      async onMounted() {
+        await sprintsService.getSptintsByProjectId(props.projectId)
+      },
       async deleteBacklog() {
         const res = await backlogItemsService.deleteBacklog(props.backlogitem.id, props.projectId)
         logger.log('deleted Backlog', res)
@@ -111,8 +123,11 @@ export default {
       },
       async onStatusChange(e, projectId, backlogId) {
         const status = e.target.value
-        logger.log('status', status)
         await backlogItemsService.updateBacklog(status, projectId, backlogId)
+      },
+      async changeBacklogItemSprint(e, projectId, backlogId) {
+        const sprint = e.target.value
+        await backlogItemsService.updateSprint(sprint, projectId, backlogId)
       }
     }
   }
