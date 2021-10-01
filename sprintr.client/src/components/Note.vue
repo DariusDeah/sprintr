@@ -7,15 +7,17 @@
       {{ note.creator.name }} <br>
       {{ note.body }}
     </div>
-    <div class="col-1" v-if="account.id === current.projectId">
+    <div class="col-1" v-if="account.id === project.projectId">
       <i class="mdi mdi-delete text-danger selectable" @click="deleteNote(note.id)"></i>
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
 import { Note } from '../Models/Note'
 import { notesService } from '../services/NotesService'
+import { AppState } from '../AppState'
 export default {
   props: {
     note: {
@@ -29,6 +31,8 @@ export default {
   },
   setup(props) {
     return {
+      project: computed(() => AppState.activeProject),
+      account: computed(() => AppState.account),
       async deleteNote(noteId) {
         await notesService.deleteNote(props.projectId, noteId)
       }
