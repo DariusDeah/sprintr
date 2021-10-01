@@ -4,7 +4,7 @@ import { api } from './AxiosService'
 class SprintsService {
   async getSptintsByProjectId(projectId) {
     const res = await api.get(`/api/projects/${projectId}/sprints`)
-    logger.log('getSptintsByProjectId', res)
+    logger.log('sprints', res)
   }
 }
 
