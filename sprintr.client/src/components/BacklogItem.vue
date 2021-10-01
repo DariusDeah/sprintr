@@ -46,6 +46,7 @@
   <Modal :id="'backlog-modal-' + backlogitem.id">
     <template #modal-title>
       <h4>{{ backlogitem.name }}</h4> <br>
+      {{ backlogitem.description }}
       <div class="row">
         <div class="col-6">
           {{ backlogitem.status }}
@@ -76,6 +77,9 @@
         </div>
         <div class="col-6">
           <select name="changeSprint" :selected="backlogitem.sprintId" @change="changeBacklogItemSprint($event, backlogitem.projectId, backlogitem.id)">
+            <option value="0">
+              ---- Select Sprint ----
+            </option>
             <option v-for="s in sprints" :key="s.id" :sprint="s" :value="s.id">
               {{ s.name }}
             </option>
