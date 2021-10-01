@@ -3,9 +3,10 @@
     <div class="form-group">
       <input type="text"
              class="from-control"
-             name="title"
+             name="name"
              placeholder="Sprint Title"
              v-model="editable.name"
+
              required
       >
       <div class="form-group">
@@ -13,7 +14,6 @@
                class="from-control"
                name="body"
                placeholder="Description"
-               v-model="editable.description"
                required
         >
       </div>
@@ -33,19 +33,24 @@ import { ref } from '@vue/reactivity'
 import { sprintsService } from '../services/SprintsService'
 import Pop from '../utils/Pop'
 import { useRoute } from 'vue-router'
-const editable = ref({})
+import { SprintModel } from '../Models/Sprint'
+import { AppState } from '../AppState'
+import { computed } from '@vue/runtime-core'
 const route = useRoute()
 export default {
-  setup() {
+  setup(props) {
+    const editable = ref({})
     return {
+      editable,
       async createSprint() {
         try {
-          await sprintsService.createSprint(editable.value, route.params.projectId)
+          await sprintsService.createSprint(editable.value, this.projectId.id)
           Pop.toast('sprint created', 'success')
         } catch (error) {
           Pop.toast(error, 'error')
         }
-      }
+      },
+      projectId: computed(() => AppState.activeProject)
     }
   }
 }
