@@ -64,7 +64,7 @@ export default {
       },
       async createBacklog() {
         try {
-          await backlogItemsService.createBacklog(route.params.projectId, editable.value)
+          await backlogItemsService.createBacklog(editable.value)
         } catch (error) {
           Pop.toast(error.message, 'error')
         }

@@ -20,7 +20,6 @@ class ProjectService {
     const res = await api.post('api/projects', projectData)
     logger.log(res.data)
     AppState.projects.unshift(new ProjectModel(res.data))
-    router.push({ path: 'Project', params: { projectId: projectId } })
   }
 
   async removeProject(projectId) {

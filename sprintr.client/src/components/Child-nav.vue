@@ -11,14 +11,14 @@
     <div class="col-lg-6">
       <ul>
         <li>backlog</li>
-        <router-link :to="{name:'Project.Sprint', params:{id:project.id}}">
-          <li class="selectable">
-            sprint
-          </li>
-        </router-link>
 
         <li>sprint2</li>
       </ul>
+      <!-- <router-link :to="{:'Project.Sprint', params:{id:project.id}}"> -->
+      <button class="btn btn-info">
+        sprint
+      </button>
+      <!-- </router-link> -->
     </div>
   </nav>
 </template>

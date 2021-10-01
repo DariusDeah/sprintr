@@ -39,7 +39,11 @@ import { ProjectModel } from '../Models/Project'
 
 export default {
   props: {
-    projects: { type: ProjectModel, required: true }
+    projects: { type: ProjectModel, required: true },
+    projectId: {
+      type: String,
+      required: true
+    }
   },
   setup(props) {
     const project = ref({ })
@@ -51,6 +55,7 @@ export default {
           Pop.toast('Project Added', 'success')
           const modal = Modal.getInstance(document.getElementById('project-modal'))
           modal.hide()
+
           // clears the form
           project.value = {}
         } catch (error) {
