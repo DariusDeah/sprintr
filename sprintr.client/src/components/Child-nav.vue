@@ -14,11 +14,11 @@
 
         <li>sprint2</li>
       </ul>
-      <!-- <router-link :to="{:'Project.Sprint', params:{id:project.id}}"> -->
-      <button class="btn btn-info">
-        sprint
-      </button>
-      <!-- </router-link> -->
+      <router-link :to="{name:'Project.Sprint'}">
+        <button class="btn btn-info nav-link">
+          sprint
+        </button>
+      </router-link>
     </div>
   </nav>
 </template>
