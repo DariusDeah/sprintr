@@ -13,7 +13,7 @@
       </div>
       <div class="col-5">
         <p class="card-text">
-          <i class="mdi mdi-weight">{{ task.weight }}</i>
+          <i class="mdi mdi-weight text-info">{{ task.weight }}</i>
         </p>
       </div>
       <div class="col-1 align-items-end">

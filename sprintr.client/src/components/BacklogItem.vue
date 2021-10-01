@@ -7,12 +7,15 @@
         {{ backlogitem.status }}
       </div>
       <div class="col-3">
-        <button class="btn btn-info" @click="toggleBacklogDetails()">
+        <button class="btn btn-info my-1" @click="toggleBacklogDetails()">
+          Show Tasks
+        </button> <br>
+        <button class="btn btn-info">
           Show Details
         </button>
       </div>
       <div class="col-1">
-        <!-- weight goes here -->
+        <i class="mdi mdi-weight text-info">{{ totalComputedTaskWeight }}</i>
       </div>
       <div class="col-3">
         <button class="btn btn-success" :data-bs-target="'#task-modal-' + backlogitem.id" data-bs-toggle="modal">
@@ -61,6 +64,7 @@ export default {
   setup(props) {
     return {
       tasks: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id)),
+      totalComputedTaskWeight: computed(() => AppState.tasks.reduce(function(prev, cur) { return prev + cur.weight }, 0)),
       async deleteBacklog() {
         const res = await backlogItemsService.deleteBacklog(props.backlogitem.id, props.projectId)
         logger.log('deleted Backlog', res)
