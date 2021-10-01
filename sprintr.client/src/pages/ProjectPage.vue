@@ -39,6 +39,7 @@ import { AppState } from '../AppState'
 import { backlogItemsService } from '../services/BacklogItemsService'
 import Pop from '../utils/Pop'
 import { tasksService } from '../services/TasksService'
+import { sprintsService } from '../services/SprintsService'
 export default {
 
   setup() {
@@ -51,6 +52,7 @@ export default {
       await projectService.getProjectsById(route.params.projectId)
       await backlogItemsService.getBacklogItemsByProjectId(route.params.projectId)
       await tasksService.getTasks(route.params.projectId)
+      await sprintsService.getSptintsByProjectId(route.params.projectId)
     })
     return {
       // everthing defined under the setup most be returned if we want it accesible to the entire component
