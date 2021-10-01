@@ -2,9 +2,11 @@
   <form @submit.prevent="createNote()">
     <div class="form-group">
       <label for="body">Note:</label>
-      <input type="text" name="body" v-model="body">
+      <input type="text" name="body" v-model="note.body" required>
     </div>
-    <button type="submit"></button>
+    <button type="submit">
+      Submit
+    </button>
   </form>
 </template>
 
@@ -16,13 +18,20 @@ export default {
     backlogItemId: {
       type: String,
       required: true
+    },
+    projectId: {
+      type: String,
+      required: true
     }
   },
-  setup() {
+  setup(props) {
     const note = ref({})
     return {
+      note,
       createNote() {
-        notesService.createNote()
+        note.value.backlogItemId = props.backlogItemId
+        note.value.projectId = props.projectId
+        notesService.createNote(props.projectId, note.value)
       }
     }
   }

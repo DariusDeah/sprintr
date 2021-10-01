@@ -71,7 +71,8 @@
       </div>
     </template>
     <template #modal-body>
-      <NoteForm :backlog-item-id="backlogitem.id" />
+      <NoteForm :backlog-item-id="backlogitem.id" :project-id="projectId" />
+      <Note v-for="n in notes" :key="n.id" :note="n" />
     </template>
   </Modal>
 </template>
@@ -97,6 +98,7 @@ export default {
     return {
       tasks: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id)),
       totalComputedTaskWeight: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id).reduce(function(prev, cur) { return prev + cur.weight }, 0)),
+      notes: computed(() => AppState.notes.filter(n => n.backlogItemId === props.backlogitem.id)),
       async deleteBacklog() {
         const res = await backlogItemsService.deleteBacklog(props.backlogitem.id, props.projectId)
         logger.log('deleted Backlog', res)
