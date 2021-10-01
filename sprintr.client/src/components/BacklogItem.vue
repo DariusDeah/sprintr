@@ -71,6 +71,7 @@
       </div>
     </template>
     <template #modal-body>
+      <NoteForm :backlog-item-id="backlogitem.id" />
     </template>
   </Modal>
 </template>
