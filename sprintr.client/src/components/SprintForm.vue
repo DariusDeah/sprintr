@@ -36,21 +36,29 @@ import { useRoute } from 'vue-router'
 import { SprintModel } from '../Models/Sprint'
 import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
+import { ProjectModel } from '../Models/Project'
 const route = useRoute()
 export default {
+  props: {
+    projects: { type: ProjectModel, required: true },
+    projectId: {
+      type: String,
+      required: true
+    }
+  },
   setup(props) {
     const editable = ref({})
     return {
       editable,
+      projectid: computed(() => AppState.activeProject),
       async createSprint() {
         try {
-          await sprintsService.createSprint(editable.value, this.projectId.id)
+          await sprintsService.createSprint(editable.value)
           Pop.toast('sprint created', 'success')
         } catch (error) {
           Pop.toast(error, 'error')
         }
-      },
-      projectId: computed(() => AppState.activeProject)
+      }
     }
   }
 }
