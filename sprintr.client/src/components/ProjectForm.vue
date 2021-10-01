@@ -33,8 +33,6 @@ import { ref } from '@vue/reactivity'
 import { projectService } from '../services/ProjectService'
 import Pop from '../utils/Pop'
 import { Modal } from 'bootstrap'
-import { router } from '../router'
-import { AppState } from '../AppState'
 import { ProjectModel } from '../Models/Project'
 
 export default {
