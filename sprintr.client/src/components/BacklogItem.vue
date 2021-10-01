@@ -2,7 +2,8 @@
   <div class="card my-1">
     <div class="row card-header">
       <div class="col-4">
-        <h6>{{ backlogitem.name }}</h6>
+        <h6>{{ backlogitem.name }}</h6> <br>
+        {{ backlogitem.sprintId }}
         <br>
         {{ backlogitem.status }}
       </div>
@@ -68,10 +69,15 @@
             </option>
           </select>
         </div>
-        <div class="col-12">
+      </div>
+      <div class="row mt-2">
+        <div class="col-6">
+          Change Sprint:
+        </div>
+        <div class="col-6">
           <select name="changeSprint" :selected="backlogitem.sprintId" @change="changeBacklogItemSprint($event, backlogitem.projectId, backlogitem.id)">
-            <option v-for="s in sprints" :key="s.id" :sprint="s" :value="sprint.id">
-              {{ sprint.name }}
+            <option v-for="s in sprints" :key="s.id" :sprint="s" :value="s.id">
+              {{ s.name }}
             </option>
           </select>
         </div>
@@ -101,7 +107,6 @@ export default {
       type: String,
       required: true
     }
-
   },
   setup(props) {
     return {
@@ -109,6 +114,7 @@ export default {
       tasks: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id)),
       account: computed(() => AppState.account),
       currentProject: computed(() => AppState.activeProject),
+      currentSprint: computed(() => AppState.sprints.filter(s => s.id === props.backlogitem.sprintId)),
       notes: computed(() => AppState.notes.filter(n => n.backlogItemId === props.backlogitem.id)),
       totalComputedTaskWeight: computed(() => AppState.tasks.filter(t => t.backlogItemId === props.backlogitem.id).reduce(function(prev, cur) { return prev + cur.weight }, 0)),
       async onMounted() {

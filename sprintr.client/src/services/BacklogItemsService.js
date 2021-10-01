@@ -31,6 +31,15 @@ class BacklogItemsService {
 
     logger.log('Updated Backlog', res.data)
   }
+
+  async updateSprint(data, projectId, backlogId) {
+    const foundBacklog = await AppState.backlogItems.find(b => b.id === backlogId)
+    foundBacklog.sprintId = data
+    logger.log('Found Backlog', foundBacklog)
+    const res = await api.put(`api/projects/${projectId}/backlog/${backlogId}`, foundBacklog)
+    const foundNBacklog = AppState.backlogItems.findIndex(b => b.id === backlogId)
+    AppState.backlogItems[foundNBacklog] = res.data
+  }
 }
 
 export const backlogItemsService = new BacklogItemsService()
