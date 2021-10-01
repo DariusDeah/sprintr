@@ -72,7 +72,7 @@
     </template>
     <template #modal-body>
       <NoteForm :backlog-item-id="backlogitem.id" :project-id="projectId" />
-      <Note v-for="n in notes" :key="n.id" :note="n" />
+      <Note v-for="n in notes" :key="n.id" :note="n" :project-id="projectId" />
     </template>
   </Modal>
 </template>
