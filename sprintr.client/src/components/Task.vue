@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-1">
         <div>
-          <input type="checkbox">
+          <input type="checkbox" @click="toggleIsComplete()" :checked="task.isComplete">
         </div>
       </div>
       <div class="col-5">
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { tasksService } from '../services/TasksService'
 export default {
   props: {
     task: {
@@ -33,7 +34,9 @@ export default {
   },
   setup(props) {
     return {
-
+      async toggleIsComplete() {
+        await tasksService.toggleIsComplete(props.task.id)
+      }
     }
   }
 }

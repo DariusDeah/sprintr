@@ -14,6 +14,12 @@ class TasksService {
     const res = await api.get(`api/projects/${projectId}/tasks`)
     AppState.tasks = res.data.map(t => new Task(t))
   }
+
+  async toggleIsComplete(taskId) {
+    const foundTask = await AppState.tasks.find(t => t.id === taskId)
+    foundTask.isComplete = !foundTask.isComplete
+    logger.log(AppState.tasks)
+  }
 }
 
 export const tasksService = new TasksService()
