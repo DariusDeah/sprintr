@@ -4,9 +4,11 @@
       <h1 class="text-light fs-1">
         {{ project.name }}
       </h1>
-      <button class="btn btn-danger" @click="removeProject()">
-        delete project
-      </button>
+      <div v-if="account.id === project.creatorId">
+        <button class="btn btn-danger" @click="removeProject()">
+          delete project
+        </button>
+      </div>
     </div>
     <div class="col-lg-6">
       <ul>
@@ -50,6 +52,7 @@ export default {
     return {
       editable,
       project: computed(() => AppState.activeProject),
+      account: computed(() => AppState.account),
       toggleBacklogForm() {
         document.getElementById('BacklogForm').classList.toggle('visually-hidden')
       },
