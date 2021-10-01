@@ -20,6 +20,12 @@ class TasksService {
     foundTask.isComplete = !foundTask.isComplete
     logger.log(AppState.tasks)
   }
+
+  async deleteTask(taskId, projectId) {
+    const res = await api.delete(`api/projects/${projectId}/tasks/${taskId}`)
+    logger.log('deleted task', res.data)
+    AppState.tasks.filter(t => t.id !== taskId)
+  }
 }
 
 export const tasksService = new TasksService()

@@ -17,7 +17,7 @@
         </p>
       </div>
       <div class="col-1 align-items-end">
-        <i class="mdi mdi-delete text-danger selectable"></i>
+        <i class="mdi mdi-delete text-danger selectable" @click="deleteTask(task.id, task.projectId)"></i>
       </div>
     </div>
   </div>
@@ -25,6 +25,7 @@
 
 <script>
 import { tasksService } from '../services/TasksService'
+import Pop from '../utils/Pop'
 export default {
   props: {
     task: {
@@ -36,6 +37,13 @@ export default {
     return {
       async toggleIsComplete() {
         await tasksService.toggleIsComplete(props.task.id)
+      },
+      async deleteTask(taskId, projectId) {
+        try {
+          await tasksService.deleteTask(taskId, projectId)
+        } catch (error) {
+          Pop.toast('Oh No!', error)
+        }
       }
     }
   }

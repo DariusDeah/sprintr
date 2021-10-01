@@ -6,10 +6,13 @@
         <br>
         {{ backlogitem.status }}
       </div>
-      <div class="col-4">
+      <div class="col-3">
         <button class="btn btn-info" @click="toggleBacklogDetails()">
           Show Details
         </button>
+      </div>
+      <div class="col-1">
+        <!-- weight goes here -->
       </div>
       <div class="col-3">
         <button class="btn btn-success" :data-bs-target="'#task-modal-' + backlogitem.id" data-bs-toggle="modal">
