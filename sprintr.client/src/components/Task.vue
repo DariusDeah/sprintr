@@ -1,14 +1,19 @@
 <template>
   <div class="card my-1">
-    <div class="row d-flex">
-      <div class="col-6">
+    <div class="row">
+      <div class="col-1">
+        <div>
+          <input type="checkbox">
+        </div>
+      </div>
+      <div class="col-5">
         <h4 class="card-title">
           {{ task.name }}
         </h4>
       </div>
       <div class="col-5">
         <p class="card-text">
-          Weight: {{ task.weight }}
+          <i class="mdi mdi-weight">{{ task.weight }}</i>
         </p>
       </div>
       <div class="col-1 align-items-end">
