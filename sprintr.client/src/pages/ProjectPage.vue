@@ -40,6 +40,7 @@ import { backlogItemsService } from '../services/BacklogItemsService'
 import Pop from '../utils/Pop'
 import { tasksService } from '../services/TasksService'
 export default {
+
   setup() {
     // ref is a refrence object and the empty object is the the ref.value or in this case the editable.value
     // refs are also used to create reactive values

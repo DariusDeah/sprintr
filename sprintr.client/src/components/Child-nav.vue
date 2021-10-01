@@ -29,11 +29,20 @@ import { AppState } from '../AppState'
 import Pop from '../utils/Pop'
 import { projectService } from '../services/ProjectService'
 import { ProjectModel } from '../Models/Project'
+import { useRoute } from 'vue-router'
+import { router } from '../router'
 export default {
+
   props: {
-    projects: { type: ProjectModel, required: true }
+    projects: { type: ProjectModel, required: true },
+    projectId: {
+      type: String,
+      required: true
+    }
   },
+
   setup(props) {
+    const route = useRoute()
     const editable = ref({})
     return {
       editable,
@@ -44,8 +53,9 @@ export default {
       async removeProject() {
         try {
           if (await Pop.confirm()) {
-            await projectService.removeProject(props.projects.id)
+            await projectService.removeProject(route.params.projectId)
             Pop.toast('project deleted')
+            router.push({ path: '/' })
           }
         } catch (error) {
           Pop.toast(error, 'error')
