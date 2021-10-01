@@ -15,9 +15,12 @@ class TasksService {
     AppState.tasks = res.data.map(t => new Task(t))
   }
 
-  async toggleIsComplete(taskId) {
+  async toggleIsComplete(taskId, projectId) {
     const foundTask = await AppState.tasks.find(t => t.id === taskId)
     foundTask.isComplete = !foundTask.isComplete
+    const res = await api.put(`api/projects/${projectId}/tasks`, foundTask)
+    const foundNTask = await AppState.tasks.findIndex(t => t.id === taskId)
+    AppState.tasks[foundNTask] = res.data
     logger.log(AppState.tasks)
   }
 

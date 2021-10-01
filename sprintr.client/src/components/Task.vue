@@ -40,7 +40,7 @@ export default {
       project: computed(() => AppState.activeProject),
       account: computed(() => AppState.account),
       async toggleIsComplete() {
-        await tasksService.toggleIsComplete(props.task.id)
+        await tasksService.toggleIsComplete(props.task.id, props.task.projectId)
       },
       async deleteTask(taskId, projectId) {
         try {
