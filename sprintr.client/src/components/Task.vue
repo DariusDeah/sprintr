@@ -16,7 +16,7 @@
           <i class="mdi mdi-weight text-info">{{ task.weight }}</i>
         </p>
       </div>
-      <div class="col-1 align-items-" v-if="account.id === currentProject.creatorId">
+      <div class="col-1 align-items-" v-if="account.id === project.creatorId">
         <i class="mdi mdi-delete text-danger selectable" @click="deleteTask(task.id, task.projectId)"></i>
       </div>
     </div>

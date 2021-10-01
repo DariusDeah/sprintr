@@ -7,7 +7,7 @@
       {{ note.creator.name }} <br>
       {{ note.body }}
     </div>
-    <div class="col-1">
+    <div class="col-1" v-if="account.id === current.projectId">
       <i class="mdi mdi-delete text-danger selectable" @click="deleteNote(note.id)"></i>
     </div>
   </div>
