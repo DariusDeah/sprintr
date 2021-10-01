@@ -18,9 +18,11 @@
         >
       </div>
       <div class="form-group">
+        <!-- <router-link :to="{ name: 'Project',params:{projectId:projects.id} }"> -->
         <button type="submit" class="btn btn-success">
           Post
         </button>
+        <!-- </router-link> -->
       </div>
     </div>
   </form>
@@ -31,18 +33,25 @@ import { ref } from '@vue/reactivity'
 import { projectService } from '../services/ProjectService'
 import Pop from '../utils/Pop'
 import { Modal } from 'bootstrap'
+import { router } from '../router'
+import { AppState } from '../AppState'
+import { ProjectModel } from '../Models/Project'
 
 export default {
-  setup() {
-    const project = ref({ title: '', description: '' })
+  props: {
+    projects: { type: ProjectModel, required: true }
+  },
+  setup(props) {
+    const project = ref({ })
     return {
       project,
-      async createProject() {
+      async createProject(props) {
         try {
           await projectService.createProject(project.value)
           Pop.toast('Project Added', 'success')
           const modal = Modal.getInstance(document.getElementById('project-modal'))
           modal.hide()
+          // clears the form
           project.value = {}
         } catch (error) {
           Pop.toast(error, 'error')
