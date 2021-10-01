@@ -41,6 +41,8 @@ import Pop from '../utils/Pop'
 import { tasksService } from '../services/TasksService'
 export default {
   setup() {
+    // ref is a refrence object and the empty object is the the ref.value or in this case the editable.value
+    // refs are also used to create reactive values
     const editable = ref({})
     // allows us to use the id in the url
     const route = useRoute()
@@ -50,8 +52,10 @@ export default {
       await tasksService.getTasks(route.params.projectId)
     })
     return {
+      // everthing defined under the setup most be returned if we want it accesible to the entire component
       route,
       editable,
+
       backlogItems: computed(() => AppState.backlogItems),
       projects: computed(() => AppState.activeProject),
       toggleBacklogForm() {
