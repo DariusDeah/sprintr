@@ -10,7 +10,7 @@
         <button class="btn btn-info my-1" @click="toggleBacklogDetails()">
           Show Tasks
         </button> <br>
-        <button class="btn btn-info">
+        <button class="btn btn-info" :data-bs-target="'#backlog-modal-' + backlogitem.id" data-bs-toggle="modal">
           Show Details
         </button>
       </div>
@@ -42,6 +42,37 @@
       <Task v-for="t in tasks" :key="t.id" :task="t" />
     </div>
   </div>
+  <Modal :id="'backlog-modal-' + backlogitem.id">
+    <template #modal-title>
+      <h4>{{ backlogitem.name }}</h4> <br>
+      <div class="row">
+        <div class="col-6">
+          {{ backlogitem.status }}
+        </div>
+        <div class="col-6">
+          <select name="ChangeStatus" :selected="backlogitem.status" @change="onStatusChange($event, backlogitem.projectId, backlogitem.id)">
+            <option value="0">
+              ---- Select Status ----
+            </option>
+            <option value="Pending">
+              Pending
+            </option>
+            <option value="In Progress">
+              In Progress
+            </option>
+            <option value="In Reveiw">
+              In Reveiw
+            </option>
+            <option value="Done">
+              Done
+            </option>
+          </select>
+        </div>
+      </div>
+    </template>
+    <template #modal-body>
+    </template>
+  </Modal>
 </template>
 
 <script>
@@ -71,6 +102,11 @@ export default {
       },
       toggleBacklogDetails() {
         document.getElementById(`task-${props.backlogitem.id}`).classList.toggle('visually-hidden')
+      },
+      async onStatusChange(e, projectId, backlogId) {
+        const status = e.target.value
+        logger.log('status', status)
+        await backlogItemsService.updateBacklog(status, projectId, backlogId)
       }
     }
   }

@@ -4,7 +4,7 @@
   <div class="row justify-content-end">
     <div class="col-11">
       <div class="row visually-hidden justify-content-center" id="BacklogForm">
-        <form @submit.prevent="createBacklog()" class="col-8">
+        <form @submit.prevent="createBacklog(route.params.projectId)" class="col-8">
           <div class="form-group row">
             <label for="name">Backlog Name:</label>
             <input type="text" name="name" v-model="editable.name">
@@ -62,9 +62,9 @@ export default {
       toggleBacklogForm() {
         document.getElementById('BacklogForm').classList.toggle('visually-hidden')
       },
-      async createBacklog() {
+      async createBacklog(projectId) {
         try {
-          await backlogItemsService.createBacklog(editable.value)
+          await backlogItemsService.createBacklog(projectId, editable.value)
         } catch (error) {
           Pop.toast(error.message, 'error')
         }

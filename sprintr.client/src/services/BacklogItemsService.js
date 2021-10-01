@@ -21,6 +21,16 @@ class BacklogItemsService {
     AppState.backlogItems = AppState.backlogItems.filter(b => b.id !== backlogId)
     logger.log('deleted res', res)
   }
+
+  async updateBacklog(data, projectId, backlogId) {
+    const foundBacklog = await AppState.backlogItems.find(b => b.id === backlogId)
+    foundBacklog.status = data.toString()
+    const res = await api.put(`api/projects/${projectId}/backlog/${backlogId}`, foundBacklog)
+    const foundNBacklog = AppState.backlogItems.findIndex(b => b.id === backlogId)
+    AppState.backlogItems[foundNBacklog] = res.data
+
+    logger.log('Updated Backlog', res.data)
+  }
 }
 
 export const backlogItemsService = new BacklogItemsService()
