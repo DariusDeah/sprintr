@@ -16,12 +16,16 @@ class TasksService {
   }
 
   async toggleIsComplete(taskId, projectId) {
-    const foundTask = await AppState.tasks.find(t => t.id === taskId)
-    foundTask.isComplete = !foundTask.isComplete
-    const res = await api.put(`api/projects/${projectId}/tasks`, foundTask)
-    const foundNTask = await AppState.tasks.findIndex(t => t.id === taskId)
-    AppState.tasks[foundNTask] = res.data
-    logger.log(AppState.tasks)
+    try {
+      const foundTask = await AppState.tasks.find(t => t.id === taskId)
+      foundTask.isComplete = !foundTask.isComplete
+      const res = await api.put(`api/projects/${projectId}/tasks/${taskId}`, foundTask)
+      const foundNTask = await AppState.tasks.findIndex(t => t.id === taskId)
+      AppState.tasks[foundNTask] = res.data
+      logger.log(AppState.tasks)
+    } catch (error) {
+      logger.log('what Happened?', error)
+    }
   }
 
   async deleteTask(taskId, projectId) {

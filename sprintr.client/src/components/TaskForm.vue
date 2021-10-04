@@ -49,6 +49,7 @@ export default {
       async createTask() {
         try {
           task.value.backlogItemId = props.idProp
+          task.value.projectId = this.project.id
           await tasksService.createTask(task.value, this.project.id)
           Pop.toast('Task Added', 'success')
           const modal = Modal.getInstance(document.getElementById('task-form'))

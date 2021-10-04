@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-1">
         <div>
-          <input type="checkbox" @click="toggleIsComplete()" :checked="task.isComplete">
+          <input type="checkbox" @click="toggleIsComplete(task.id, task.projectId)" :checked="task.isComplete">
         </div>
       </div>
       <div class="col-5">
@@ -39,8 +39,8 @@ export default {
     return {
       project: computed(() => AppState.activeProject),
       account: computed(() => AppState.account),
-      async toggleIsComplete() {
-        await tasksService.toggleIsComplete(props.task.id, props.task.projectId)
+      async toggleIsComplete(taskId, projectId) {
+        await tasksService.toggleIsComplete(taskId, projectId)
       },
       async deleteTask(taskId, projectId) {
         try {
