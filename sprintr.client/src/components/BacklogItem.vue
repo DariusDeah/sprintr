@@ -43,6 +43,7 @@
       <Task v-for="t in tasks" :key="t.id" :task="t" />
     </div>
   </div>
+
   <Modal :id="'backlog-modal-' + backlogitem.id">
     <template #modal-title>
       <h4>{{ backlogitem.name }}</h4> <br>
